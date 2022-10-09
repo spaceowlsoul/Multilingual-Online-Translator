@@ -24,9 +24,17 @@ def translation(language_choice, word):
     translations = [t.text for t in trans_tags]
     examples = [e.text.strip() for e in examples_tags]
 
-    print("Translations")
-    print(translations)
-    print(examples)
+    output_num = 5
+
+    print(f'\n{language_1.title()} Translations:')
+    print(*translations[:output_num], sep='\n')
+
+    print(f'\n{language_1.title()} Examples:')
+    i = 2
+    while i < len(examples):
+        examples.insert(i, ' ')
+        i += 3
+    print(*examples[:10 + output_num], sep='\n')
 
 
 def main():
@@ -44,4 +52,3 @@ or "fr" if you want to translate from English into French:\n''')
 
 if __name__ == "__main__":
     main()
-
