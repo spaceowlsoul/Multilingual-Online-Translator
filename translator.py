@@ -1,19 +1,19 @@
 import requests
-
 from bs4 import BeautifulSoup
 
 url = 'https://context.reverso.net/translation/'
 user_agent = 'Mozilla/5.0'
 headers = {'User-Agent': user_agent}
 
-lang_dict = {'en': 'english', 'fr': 'french'}
-trans_dict = {'en': 'french', 'fr': 'english'}
+lang_dict = {'1': 'arabic', '2': 'german', '3': 'english', '4': 'spanish', '5': 'french',
+             '6': 'hebrew', '7': 'japanese', '8': 'dutch', '9': 'polish', '10': 'portuguese',
+             '11': 'romanian', '12': 'russian', '13': 'turkish'}
 
 
-def translation(language_choice, word):
-    language_1 = lang_dict[language_choice]
-    language_2 = trans_dict[language_choice]
-    trans_page = f'{url}{language_2}-{language_1}/{word}'
+def translation(from_, to_, word):
+    language_1 = lang_dict[from_]
+    language_2 = lang_dict[to_]
+    trans_page = f'{url}{language_1}-{language_2}/{word}'
 
     r = requests.get(trans_page, headers=headers)
     soup = BeautifulSoup(r.content, 'html.parser')
@@ -23,31 +23,33 @@ def translation(language_choice, word):
 
     translations = [t.text for t in trans_tags]
     examples = [e.text.strip() for e in examples_tags]
-
-    output_num = 5
-
-    print(f'\n{language_1.title()} Translations:')
-    print(*translations[:output_num], sep='\n')
-
-    print(f'\n{language_1.title()} Examples:')
     i = 2
     while i < len(examples):
         examples.insert(i, ' ')
         i += 3
+
+    output_num = 5
+
+    print(f'\n{language_2.title()} Translations:')
+    print(*translations[:output_num], sep='\n')
+
+    print(f'\n{language_2.title()} Examples:')
     print(*examples[:10 + output_num], sep='\n')
 
 
 def main():
+    print('Hello, welcome to the translator. Translator supports:')
+    for num, lang in lang_dict.items():
+        print('{}. {}'.format(num, lang.title()))
+
+    from_ = input('Type the number of your language:\n').lower()
+    to_ = input('Type the number of language you want to translate to:\n').lower()
+    word = input('Type the word you want to translate:\n').lower()
+
     r = requests.get(url, headers=headers)
-
-    language_choice = input('''Type "en" if you want to translate from French into English, 
-or "fr" if you want to translate from English into French:\n''')
-    word = input('Type the word you want to translate:\n')
-    print(f'You chose "{language_choice}" as the language to translate "{word}".')
-
     if r.status_code == 200:
         print(r.status_code, "OK")
-        translation(language_choice, word)
+        translation(from_, to_, word)
 
 
 if __name__ == "__main__":
