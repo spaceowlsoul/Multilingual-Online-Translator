@@ -59,7 +59,7 @@ def translation(from_, to_, word):
         if parsing(trans_page):
             translations, examples = parsing(trans_page)
 
-            output_num = 1
+            output_num = 5
 
             output(language_2, translations, examples, output_num)
             export_to_file(word, language_2, translations, examples, output_num)
