@@ -1,5 +1,5 @@
 # :capital_abcd: Multilingual-Online-Translator
-Everyone’s familiar with online translators. They giving us a handy way to translate on the go. 
+Everyone’s familiar with online translators. They give us a handy way to translate on the go. 
 
 This program is a translator based on the well-known online-resource - __context.reverso.net__.
 
